@@ -13,11 +13,4 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
     }
-
-    public void onButtonLOGIN(View v){
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-        Toast.makeText(getApplicationContext(), "노캡", Toast.LENGTH_SHORT).show();
-        finish();
-    }
 }
