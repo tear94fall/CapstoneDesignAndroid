@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
         android:layout_marginTop="300dp"
-        android:text="로그인 완료"
+        android:text="테스트 시작"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,9 +20,9 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
+        android:layout_marginStart="160dp"
         android:layout_marginTop="356dp"
-        android:text="로그아웃 하기"
+        android:text="테스트 시작"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
