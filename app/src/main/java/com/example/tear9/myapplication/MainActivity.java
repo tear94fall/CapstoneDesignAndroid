@@ -15,38 +15,43 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button button = findViewById(R.id.button);
+        Button reg_button = findViewById(R.id.Register);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView id = (TextView)findViewById(R.id.editText2);
-                TextView pw = (TextView)findViewById(R.id.editText);
+                TextView id = (TextView) findViewById(R.id.editText2);
+                TextView pw = (TextView) findViewById(R.id.editText);
 
-                final String id_str = id.getText().toString();
-                final String pw_str = pw.getText().toString();
+                String id_str = id.getText().toString();
+                String pw_str = pw.getText().toString();
 
                 TextView textView1 = (TextView) findViewById(R.id.textView4);
-                if(id_str != "") {
-                    textView1.setText(id_str);
+
+                if (logInCheck(id_str, pw_str) == true) {
+                    /* 로그인 성공시 페이지 전환 */
+                    Intent intent = new Intent(getApplicationContext(), FinishActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    /* 로그인 실패시 현재 페이지 에서 팝업창 띄울것 */
+                    /* 일정 횟수 이상 넘어갈 경우에는 블로킹 되도록 처리 함*/
                 }
-                /*
-                Intent intent = new Intent(getApplicationContext(), FinishActivity.class);
+            }
+        });
+
+        reg_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                /* 회원가입 버튼이 눌렸을 경우에는 무조건 회원 가입 페이지로 화면 전환 */
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
                 finish();
-                */
             }
         });
     }
 
-    public void onButtonClicked(View v){
-        Intent intent = new Intent(getApplicationContext(), FinishActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void onButton1Clicked(View v){
-        Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
-        startActivity(intent);
-        finish();
+    protected boolean logInCheck(String id, String passwd){
+        return true;
     }
 }
