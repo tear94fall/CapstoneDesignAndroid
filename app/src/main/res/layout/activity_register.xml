@@ -10,7 +10,7 @@
         android:id="@+id/UserIDText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="132dp"
         android:text="아이디"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,25 +18,23 @@
 
     <EditText
         android:id="@+id/UserIDInput"
-        android:layout_width="wrap_content"
+        android:layout_width="181dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
+        android:layout_marginStart="96dp"
         android:layout_marginTop="120dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="아이디"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
+        android:id="@+id/UserPWInput"
+        android:layout_width="181dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="184dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="비밀번호"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,8 +42,8 @@
         android:id="@+id/UserPWText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="192dp"
         android:text="비밀번호"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +52,19 @@
         android:id="@+id/Register_Request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원가입"
-        tools:layout_editor_absoluteX="249dp"
-        tools:layout_editor_absoluteY="359dp" />
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="184dp"
+        android:text="완료"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ID_Check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="116dp"
+        android:text="중복 검사"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
