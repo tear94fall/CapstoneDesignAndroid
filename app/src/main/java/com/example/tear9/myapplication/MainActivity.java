@@ -1,5 +1,7 @@
 package com.example.tear9.myapplication;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
                 TextView textView1 = (TextView) findViewById(R.id.textView4);
 
-                if (logInCheck(id_str, pw_str) == true) {
+                // 로그인 성공 여부 확인 하는 함수
+                if (!logInCheck(id_str, pw_str)) {
                     /* 로그인 성공시 페이지 전환 */
                     Intent intent = new Intent(getApplicationContext(), FinishActivity.class);
                     startActivity(intent);
@@ -36,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     /* 로그인 실패시 현재 페이지 에서 팝업창 띄울것 */
                     /* 일정 횟수 이상 넘어갈 경우에는 블로킹 되도록 처리 함*/
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("로그인 실패")
+                            .setMessage("올바르지 않은 시도입니다.")
+                            .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dlg, int sumthin) {
+                                }
+                            }).show(); // 팝업창 보여줌
                 }
             }
         });
@@ -52,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected boolean logInCheck(String id, String passwd){
+        String send_message = id + passwd;
         return true;
     }
 }
