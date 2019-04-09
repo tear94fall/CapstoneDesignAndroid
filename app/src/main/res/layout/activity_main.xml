@@ -55,7 +55,6 @@
         android:layout_marginTop="204dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="아이디를 입력해주세요"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
