@@ -13,14 +13,18 @@ import com.example.tear9.myapplication.MsgPacker.Client;
 
 import java.io.IOException;
 
+import static java.lang.Thread.sleep;
+
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = findViewById(R.id.button);
+        final Button button = findViewById(R.id.button);
         Button reg_button = findViewById(R.id.Register);
+
+        final int[] login_cnt = {0};
 
         // 로그인 버튼 눌렀을 경우
         button.setOnClickListener(new View.OnClickListener() {
@@ -51,13 +55,18 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         /* 로그인 실패시 현재 페이지 에서 팝업창 띄울것 */
                         /* 일정 횟수 이상 넘어갈 경우에는 블로킹 되도록 처리 함*/
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("로그인 실패")
-                                .setMessage("아디이와 비밀번호를 확인 해주세요")
-                                .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dlg, int sumthin) {
-                                    }
-                                }).show(); // 팝업창 보여줌
+                        login_cnt[0]+=1;
+                        if(login_cnt[0]>=5){
+                            button.setEnabled(false);
+                        }else {
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle("로그인 실패")
+                                    .setMessage("아디이와 비밀번호를 확인 해주세요")
+                                    .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dlg, int sumthin) {
+                                        }
+                                    }).show(); // 팝업창 보여줌
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -97,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
 
-        Thread.sleep(1000);
+        sleep(1000);
         return result;
     }
 }
