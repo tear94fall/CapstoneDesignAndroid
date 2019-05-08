@@ -52,13 +52,26 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), FinishActivity.class);
                         startActivity(intent);
                         finish();
-                    }else{
+                    }else {
                         /* 로그인 실패시 현재 페이지 에서 팝업창 띄울것 */
                         /* 일정 횟수 이상 넘어갈 경우에는 블로킹 되도록 처리 함*/
-                        login_cnt[0]+=1;
-                        if(login_cnt[0]>=5){
+                        login_cnt[0] += 1;
+                        if (login_cnt[0] >= 5) {
                             button.setEnabled(false);
-                        }else {
+                        } else if ("connet error".equals(result[0])) {
+
+
+                            // 네트워크 에러 처리 로직 추가 할것
+
+
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle("연결 실패")
+                                    .setMessage("네트워크 연결이 올바르지 않습니다.")
+                                    .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dlg, int sumthin) {
+                                        }
+                                    }).show(); // 팝업창 보여줌
+                        } else {
                             new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("로그인 실패")
                                     .setMessage("아디이와 비밀번호를 확인 해주세요")
