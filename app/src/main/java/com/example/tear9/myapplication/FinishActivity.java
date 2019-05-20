@@ -9,6 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.tear9.myapplication.MsgPacker.Client;
+
+import java.io.IOException;
+
+import static java.lang.Thread.sleep;
+
 public class FinishActivity extends AppCompatActivity {
 
     @Override
@@ -44,5 +50,27 @@ public class FinishActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // 서버에게 보내는 마지막 운전 날짜 요청 메소드
+    protected String[] lastDriverDate(final String _id) throws IOException, InterruptedException {
+        final String[] result = new String[1];
+        new Thread() {
+            public void run() {
+                try {
+                    Client client = new Client();
+                    client.getLastDriveDate(_id);
+                    result[0] = client.getResponse_data();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+        sleep(1000);
+        return result;
     }
 }
