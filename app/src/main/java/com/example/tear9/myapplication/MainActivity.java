@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
                         /* 로그인 성공한 다음 */
                         /* 마지막 운전 날짜를 알려줌 */
-                        String last_drive_date[] = lastDriverDate(id_str);
 
                         /*
                         if (!("false".equals(last_drive_date[0]))) {
@@ -151,28 +150,6 @@ public class MainActivity extends AppCompatActivity {
                     Client client = new Client();
                     client.setLoginInfo(_id, _passwd);
                     client.loginCheck();
-                    result[0] = client.getResponse_data();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-
-        sleep(1000);
-        return result;
-    }
-
-    // 서버에게 보내는 마지막 운전 날짜 요청 메소드
-    protected String[] lastDriverDate(final String _id) throws IOException, InterruptedException {
-        final String[] result = new String[1];
-        new Thread() {
-            public void run() {
-                try {
-                    Client client = new Client();
-                    client.getLastDriveDate(_id);
                     result[0] = client.getResponse_data();
 
                 } catch (IOException e) {
