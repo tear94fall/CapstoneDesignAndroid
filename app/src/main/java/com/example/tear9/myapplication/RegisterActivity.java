@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tear9.myapplication.MsgPacker.Client;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import static java.lang.Thread.sleep;
 
@@ -159,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dlg, int sumthin) {
                                     }
                                 }).show(); // 팝업창 보여줌
-                    }else if (tel.trim().length() == 0){
+                    }else if (!Pattern.matches("^01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$", tel)){
                         new AlertDialog.Builder(RegisterActivity.this)
                                 .setTitle("전화번호를 입력해주세요")
                                 .setMessage("올바른 전화번호를 입력해주세요")
