@@ -13,10 +13,16 @@ public class Client {
     private String userid;
     private String passwd;
     private String response_data;
+    // 에뮬 아이피
     private String emulator_ip_addr = "10.0.2.2";
+
+    // 내컴퓨터 아이피
     private String server_target_ip = "172.17.211.117";
-    /* 아이피 설정을 위한 부분 */
-    private String ip_addr = emulator_ip_addr;
+
+
+    // 실제 사용하는 아이피와 포트
+    private String server_ip_addr = emulator_ip_addr;
+    private int server_port = 8888;
 
     public void setLoginInfo(String id, String passwd){
         this.userid = id;
@@ -33,7 +39,7 @@ public class Client {
         Scanner scan = new Scanner(System.in);
 
         try {
-            InetSocketAddress hostAddress = new InetSocketAddress(ip_addr, 8888);
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
             SocketChannel client = SocketChannel.open(hostAddress);
 
             MessagePacker msg = new MessagePacker();
@@ -89,7 +95,7 @@ public class Client {
     //회원 가입을 위한 아이디 중복검사를 실행하는 메서드
     public void IdCheck(String _id) throws UnknownHostException,IOException, InterruptedException {
         try {
-            InetSocketAddress hostAddress = new InetSocketAddress("10.0.2.2", 8888);
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
             SocketChannel client = SocketChannel.open(hostAddress);
 
             MessagePacker msg = new MessagePacker();
@@ -142,7 +148,7 @@ public class Client {
     //회원 가입을 실행하는 메서드
     public void CreateAccount(String _id, String _passwd, String _name, String _tel) throws UnknownHostException,IOException, InterruptedException {
         try {
-            InetSocketAddress hostAddress = new InetSocketAddress("10.0.2.2", 8888);
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
             SocketChannel client = SocketChannel.open(hostAddress);
 
             MessagePacker msg = new MessagePacker();
@@ -199,7 +205,7 @@ public class Client {
     //캡챠의 문제를 가져옴
     public void getCaptchatTestSet() throws UnknownHostException,IOException, InterruptedException {
         try {
-            InetSocketAddress hostAddress = new InetSocketAddress("10.0.2.2", 8888);
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
             SocketChannel client = SocketChannel.open(hostAddress);
 
             MessagePacker msg = new MessagePacker();
@@ -247,7 +253,7 @@ public class Client {
     // 캡챠의 정답을 체크 하는 메소드
     public void CreateAccount(String _captcha_ans_num, String _capthca_ans) throws UnknownHostException,IOException, InterruptedException {
         try {
-            InetSocketAddress hostAddress = new InetSocketAddress("10.0.2.2", 8888);
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
             SocketChannel client = SocketChannel.open(hostAddress);
 
             MessagePacker msg = new MessagePacker();
@@ -302,7 +308,7 @@ public class Client {
         Scanner scan = new Scanner(System.in);
 
         try {
-            InetSocketAddress hostAddress = new InetSocketAddress(ip_addr, 8888);
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
             SocketChannel client = SocketChannel.open(hostAddress);
 
             MessagePacker msg = new MessagePacker();
@@ -357,7 +363,7 @@ public class Client {
     // 입력된 정답과 문제를 보냄 테스트가 통과했는지 아닌지에대한 값만을 가져옴
     public void getCaptchatTestSet2(String captcha_test_number, String captcha_test_answer) throws UnknownHostException,IOException, InterruptedException {
         try {
-            InetSocketAddress hostAddress = new InetSocketAddress("10.0.2.2", 8888);
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
             SocketChannel client = SocketChannel.open(hostAddress);
 
             MessagePacker msg = new MessagePacker();
@@ -402,4 +408,55 @@ public class Client {
             System.err.println(ex);
         }
     }
+
+
+    // 16번 요청
+    // 사용자의 정보를 가져오는 클래스
+    public void getUserInfo(String userid) throws UnknownHostException,IOException, InterruptedException {
+        try {
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
+            SocketChannel client = SocketChannel.open(hostAddress);
+
+            MessagePacker msg = new MessagePacker();
+            DataBuffer DataBuf = new DataBuffer();
+
+            String packet;
+            String request_number="16";
+
+            DataBuf.set_data("request_number", request_number);
+            DataBuf.set_data("userid", userid);
+            packet = DataBuf.get_data();
+
+            msg.add(packet);
+            msg.Finish();
+
+            /* 서버에게 데이터를 보냄 */
+            client.write(msg.getBuffer());
+
+            ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+
+            /* 서버에서 데이터를 받아옴 */
+            client.read(buf);
+
+            /* ByteBuffer 를 String 으로 저장 함*/
+            byte[] bytes = new byte[buf.position()];
+            buf.flip();
+            buf.get(bytes);
+            String recv_message = new String(bytes);
+
+
+            /* 반드시 닫아줄것 */
+            client.close();
+
+            /* 에러 처리 로직 추가 할것 */
+
+            response_data = recv_message;
+
+        }catch (UnknownHostException ex) {
+            System.err.println(ex);
+        }catch (IOException ex) {
+            System.err.println(ex);
+        }
+    }
+
 }

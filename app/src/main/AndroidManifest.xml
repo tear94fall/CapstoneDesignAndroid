@@ -19,6 +19,10 @@
         <activity android:name=".FinishActivity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".TestPassActivity" />
+        <activity android:name=".Captcah2Activity" />
+        <activity android:name=".MyInfoActivity" />
+        <activity android:name=".ModifyActivity" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
