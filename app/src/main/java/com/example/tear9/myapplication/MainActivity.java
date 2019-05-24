@@ -65,30 +65,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (checker) {
-                        /* 로그인 성공시 페이지 전환 */
-                        final boolean[] pop_up_checker = new boolean[1];
-                        pop_up_checker[0] = false;
-
                         /* 로그인 성공한 다음 */
-                        /* 마지막 운전 날짜를 알려줌 */
-
-                        /*
-                        if (!("false".equals(last_drive_date[0]))) {
-                            // 로그인 성공 팝업. 마지막 접속 날짜로 부터 몇일이 지났는지 표시 할것
-
-                            new AlertDialog.Builder(MainActivity.this)
-                                    .setTitle("로그인 성공!!")
-                                    .setMessage("환영 합니다")
-                                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dlg, int sumthin) {
-                                            pop_up_checker[0] = true;
-                                        }
-                                    }).show(); // 팝업창 보여줌
-                        }
-                        */
-
                         /* 테스트 시작 페이지로 이동함*/
                         Intent intent = new Intent(getApplicationContext(), FinishActivity.class);
+                        intent.putExtra("user_id",id_str); /*송신*/
                         startActivity(intent);
                         finish();
 
