@@ -2,6 +2,7 @@ package com.example.tear9.myapplication;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -123,6 +124,12 @@ public class Captcah2Activity extends AppCompatActivity {
                                         }
                                     }).show(); // 팝업창 보여줌
                         }
+                        /* leak 윈도우 에러 */
+                        /*
+                        Intent intent = new Intent(getApplicationContext(), TestPassActivity.class);
+                        startActivity(intent);
+                        finish();
+                        */
                     }
                 }
             }
