@@ -358,6 +358,12 @@ public class JoinActivity extends AppCompatActivity {
                                 }
                             }).show(); // 팝업창 보여줌
                 }
+                /* leak 윈도우 에러 */
+                /*
+                Intent intent = new Intent(getApplicationContext(), TestPassActivity.class);
+                startActivity(intent);
+                finish();
+                */
             }
         });
     }
