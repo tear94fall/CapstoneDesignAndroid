@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tear9.myapplication.MsgPacker.Client;
@@ -21,6 +23,8 @@ public class MyInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myinfo);
+
+        Button back_button = findViewById(R.id.back_button);
 
         TextView Drive_cnt = (TextView) findViewById(R.id.DriveCnt);
         TextView Sleep_cnt = (TextView) findViewById(R.id.SleepCnt);
@@ -52,7 +56,7 @@ public class MyInfoActivity extends AppCompatActivity {
             String Month = DateArray[1];
             String Day = DateArray[2];
 
-            LastDrive_date.setText("20"+Year+"년 " + Month+"월 "+ Day+"일");
+            LastDrive_date.setText("마지막 운전 날짜는 20"+Year+"년 " + Month+"월 "+ Day+"일 입니다.");
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -60,6 +64,12 @@ public class MyInfoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     protected String[] getUserInfo(final String _id) throws IOException, InterruptedException {
