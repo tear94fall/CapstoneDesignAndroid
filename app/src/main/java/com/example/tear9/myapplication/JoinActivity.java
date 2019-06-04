@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tear9.myapplication.MsgPacker.Client;
 
@@ -24,6 +26,10 @@ public class JoinActivity extends AppCompatActivity {
     정답을 배열로 고정헀지만, 서버와 통신하여 값을 비교하는 로직 구상할것
      */
 
+    /* 최대 몇회의 시도를 했는지 체크하는 변수 */
+    int CountOfTest = 0;
+    int MaxCountOfText = 5;
+
     boolean test_start_checker = false;
 
     String[] result = new String[1];
@@ -31,6 +37,8 @@ public class JoinActivity extends AppCompatActivity {
     String captcha_answer;
     String[] captcha_answer_arr;
 
+    int submit_button_count=0;
+    boolean isAlcoholCountUpdate = false;
 
     HashMap<Integer, Boolean> answer_map = new HashMap<Integer, Boolean>();
     HashMap<Integer, Boolean> test_map = new HashMap<Integer, Boolean>();
@@ -64,6 +72,11 @@ public class JoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
+
+        setTitle("ReCaptcha");
+
+        Intent intent = getIntent(); /*데이터 수신*/
+        final String user_id = intent.getExtras().getString("user_id"); /*String형*/
 
         recaptcha_Image1 = (ImageButton) findViewById(R.id.imageButton);
         recaptcha_Image2 = (ImageButton) findViewById(R.id.imageButton2);
@@ -270,6 +283,42 @@ public class JoinActivity extends AppCompatActivity {
         test_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(recaptcha_Image1.isSelected()) {
+                    recaptcha_Image1.setSelected(false);
+                    Button1Click = false;
+                }
+                if(recaptcha_Image2.isSelected()) {
+                    recaptcha_Image2.setSelected(false);
+                    Button2Click = false;
+                }
+                if(recaptcha_Image3.isSelected()) {
+                    recaptcha_Image3.setSelected(false);
+                    Button3Click = false;
+                }
+                if(recaptcha_Image4.isSelected()) {
+                    recaptcha_Image4.setSelected(false);
+                    Button4Click = false;
+                }
+                if(recaptcha_Image5.isSelected()) {
+                    recaptcha_Image5.setSelected(false);
+                    Button5Click = false;
+                }
+                if(recaptcha_Image6.isSelected()) {
+                    recaptcha_Image6.setSelected(false);
+                    Button6Click = false;
+                }
+                if(recaptcha_Image7.isSelected()) {
+                    recaptcha_Image7.setSelected(false);
+                    Button7Click = false;
+                }
+                if(recaptcha_Image8.isSelected()) {
+                    recaptcha_Image8.setSelected(false);
+                    Button8Click = false;
+                }
+                if(recaptcha_Image9.isSelected()) {
+                    recaptcha_Image9.setSelected(false);
+                    Button9Click = false;
+                }
                 test_start_checker = true;
                 try {
                     result = GetTestSet();
@@ -296,13 +345,8 @@ public class JoinActivity extends AppCompatActivity {
                     answer_map.put(__idx, true);
                 }
 
-                new AlertDialog.Builder(JoinActivity.this)
-                        .setTitle("테스트 조건입니다.")
-                        .setMessage(captcha_answer+"해당 숫자를 눌러주세요")
-                        .setNeutralButton("시작하기", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dlg, int sumthin) {
-                            }
-                        }).show(); // 팝업창 보여줌
+                Toast.makeText(getApplicationContext(), captcha_answer+" 해당 숫자를 눌러주세요.", Toast.LENGTH_LONG).show();
+                submit_button_count=0;
             }
         });
 
@@ -310,14 +354,13 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!test_start_checker){
-                    new AlertDialog.Builder(JoinActivity.this)
-                            .setTitle("테스트를 시작할수 없습니다.")
-                            .setMessage("테스트 시작 버튼을 눌러 주세요.")
-                            .setNeutralButton("테스트 시작 버튼 누르기", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dlg, int sumthin) {
-                                }
-                            }).show(); // 팝업창 보여줌
+                    Toast.makeText(getApplicationContext(), "테스트 시작버튼을 먼저 눌러주세요.", Toast.LENGTH_LONG).show();
 
+                    return;
+                }
+
+                if(submit_button_count>=5){
+                    Toast.makeText(getApplicationContext(), "최대 시도 횟수를 초과하셨습니다.", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -342,30 +385,59 @@ public class JoinActivity extends AppCompatActivity {
                 }
 
                 if(is_pass) {
-                    new AlertDialog.Builder(JoinActivity.this)
-                            .setTitle("테스트 통과")
-                            .setMessage("운전 가능한 상태입니다.")
-                            .setNeutralButton("안전운행 하세요", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dlg, int sumthin) {
-                                }
-                            }).show(); // 팝업창 보여줌
+                    Toast.makeText(getApplicationContext(), "테스트에 통과 하셨습니다.", Toast.LENGTH_LONG).show();
                 }else{
-                    new AlertDialog.Builder(JoinActivity.this)
-                            .setTitle("테스트 실패")
-                            .setMessage("음주 하셨나요?")
-                            .setNeutralButton("돌아가기", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dlg, int sumthin) {
-                                }
-                            }).show(); // 팝업창 보여줌
+                    if (MaxCountOfText > CountOfTest) {
+                        Toast.makeText(getApplicationContext(), "다시 시도해주세요. " + Integer.toString(MaxCountOfText - CountOfTest) + " 회의 기회가 남았습니다.", Toast.LENGTH_LONG).show();
+                        CountOfTest++;
+                        return;
+                    } else {
+                        Toast.makeText(getApplicationContext(), "최대 시도 횟수를 초과 하셨습니다.", Toast.LENGTH_LONG).show();
+                        if(!isAlcoholCountUpdate){
+                            isAlcoholCountUpdate=true;
+                            /* 알코올 운전 카운트 추가*/
+                            try {
+                                UpdateAlcholCount(user_id);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return;
+                    }
                 }
-                /* leak 윈도우 에러 */
-                /*
-                Intent intent = new Intent(getApplicationContext(), TestPassActivity.class);
-                startActivity(intent);
-                finish();
-                */
+                Handler timer = new Handler(); //Handler 생성
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), TestPassActivity.class);
+                        intent.putExtra("user_id", user_id); /*송신*/
+                        startActivity(intent);
+                        finish();
+                    }
+                }, 1000);
             }
         });
+    }
+
+    protected void UpdateAlcholCount(final String _id) throws IOException, InterruptedException {
+        new Thread() {
+            public void run() {
+                try {
+                    Client client = new Client();
+                    client.UpdateAlcoholCount(_id);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+        sleep(1000);
     }
 
     protected String[] GetTestSet() throws IOException, InterruptedException {
