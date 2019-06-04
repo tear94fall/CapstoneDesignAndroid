@@ -24,6 +24,8 @@ public class MyInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myinfo);
 
+        setTitle("나의 최근 운전 정보");
+
         Button back_button = findViewById(R.id.back_button);
 
         TextView Drive_cnt = (TextView) findViewById(R.id.DriveCnt);
@@ -56,7 +58,7 @@ public class MyInfoActivity extends AppCompatActivity {
             String Month = DateArray[1];
             String Day = DateArray[2];
 
-            LastDrive_date.setText("마지막 운전 날짜는 20"+Year+"년 " + Month+"월 "+ Day+"일 입니다.");
+            LastDrive_date.setText("마지막 운전 날짜는 "+Year+"년 " + Month+"월 "+ Day+"일 입니다.");
 
         } catch (InterruptedException e) {
             e.printStackTrace();

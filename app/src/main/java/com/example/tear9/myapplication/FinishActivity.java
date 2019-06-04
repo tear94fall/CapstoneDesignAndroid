@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.tear9.myapplication.MsgPacker.Client;
 
@@ -15,19 +16,31 @@ import java.io.IOException;
 import static java.lang.Thread.sleep;
 
 public class FinishActivity extends AppCompatActivity {
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish);
 
-        Button button = findViewById(R.id.button2);
+        // 상단 타이틀 변경
+        setTitle("메뉴들");
+        backPressCloseHandler = new BackPressCloseHandler(this);
+
+        Button button1 = findViewById(R.id.button2);
+        Button button2 = findViewById(R.id.button6);
         Button mypage_button = findViewById(R.id.mypage_button);
         Button modify_button = findViewById(R.id.modify_button);
 
         Intent intent = getIntent(); /*데이터 수신*/
-
         final String user_id = intent.getExtras().getString("user_id"); /*String형*/
+
         String[] result = new String[1];
         try {
             result = lastDriverDate(user_id);
@@ -38,6 +51,7 @@ public class FinishActivity extends AppCompatActivity {
         }
 
         if (result[0].length() != 0 || result[0] != "0") {
+            /*
             new AlertDialog.Builder(FinishActivity.this)
                     .setTitle("로그인 성공!!")
                     .setMessage("마지막 운행으로 부터 " + result[0] + "일이 지났습니다.")
@@ -45,7 +59,10 @@ public class FinishActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dlg, int sumthin) {
                         }
                     }).show(); // 팝업창 보여줌
-        }else{
+            */
+            Toast.makeText(getApplicationContext(), "로그인에 성공하셨습니다. \n마지막 운행으로 부터 " + result[0] + "일이 지났습니다.", Toast.LENGTH_LONG).show();
+        } else {
+            /*
             new AlertDialog.Builder(FinishActivity.this)
                     .setTitle("로그인 성공!!")
                     .setMessage("환영합니다.")
@@ -53,24 +70,27 @@ public class FinishActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dlg, int sumthin) {
                         }
                     }).show(); // 팝업창 보여줌
+                    */
+            Toast.makeText(getApplicationContext(), "로그인 성공!!", Toast.LENGTH_LONG).show();
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
+        // 테스트 1 시작
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int number;
-                number=(int)(Math.random()*100);
-                number%=2;
+                Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+                intent.putExtra("user_id", user_id); /*송신*/
+                startActivity(intent);
+            }
+        });
 
-                if(number==0) {
-                    Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    Intent intent = new Intent(getApplicationContext(), Captcah2Activity.class);
-                    startActivity(intent);
-                    finish();
-                }
+        // 테스트 2 시작
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Captcah2Activity.class);
+                intent.putExtra("user_id", user_id); /*송신*/
+                startActivity(intent);
             }
         });
 

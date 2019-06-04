@@ -5,14 +5,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tear9.myapplication.MsgPacker.Client;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import static java.lang.Thread.sleep;
 
@@ -26,6 +29,8 @@ public class ModifyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify);
+
+        setTitle("개인정보 변경");
 
         Button modify_button = findViewById(R.id.modify_button);
         Button cancel_button = findViewById(R.id.cancel_button);
@@ -86,24 +91,15 @@ public class ModifyActivity extends AppCompatActivity {
                 String tel_str = user_tel_modify.getText().toString();
 
                 if(!id_str.equals(finalUser_id_str)){
-                    new AlertDialog.Builder(ModifyActivity.this)
-                            .setTitle("아이디 변경불가")
-                            .setMessage("다른 항목을 수정해주세요.")
-                            .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dlg, int sumthin) {
-                                }
-                            }).show(); // 팝업창 보여줌
+                    Toast.makeText(getApplicationContext(), "아이디는 변경 불가능 합니다.", Toast.LENGTH_LONG).show();
                     user_id_editText.setText(finalUser_id_str);
+                    return;
+                }else if (!Pattern.matches("^01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$", tel_str)){
+                    Toast.makeText(getApplicationContext(), "올바르지 않은 전화번호 입니다.", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(pw_str.equals(finalUser_passwd_str)&&name_str.equals(finalUser_name_str)&&tel_str.equals(finalUser_tel_str)){
-                    new AlertDialog.Builder(ModifyActivity.this)
-                            .setTitle("업데이트 실패")
-                            .setMessage("변경할 내용이 없습니다")
-                            .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dlg, int sumthin) {
-                                }
-                            }).show(); // 팝업창 보여줌
+                    Toast.makeText(getApplicationContext(), "변경된 내용이 없습니다.", Toast.LENGTH_LONG).show();
                 }else{
                     String result[] = new String[0];
                     try {
@@ -125,23 +121,15 @@ public class ModifyActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        new AlertDialog.Builder(ModifyActivity.this)
-                                .setTitle("업데이트 성공")
-                                .setMessage("변경이 완료 되었습니다.")
-                                .setNeutralButton("돌아가기", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dlg, int sumthin) {
-                                    }
-                                }).show(); // 팝업창 보여줌
-                        // 완료후 이전 액티비티로 이동
-                        onBackPressed();
+                        Toast.makeText(getApplicationContext(), "개인정보가 변경되었습니다.", Toast.LENGTH_LONG).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                onBackPressed();
+                            }
+                        }, 2000);
                     }else{
-                        new AlertDialog.Builder(ModifyActivity.this)
-                                .setTitle("업데이트 실패")
-                                .setMessage("변경된 내용이 없습니다")
-                                .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dlg, int sumthin) {
-                                    }
-                                }).show(); // 팝업창 보여줌
+                        Toast.makeText(getApplicationContext(), "업데이트에 실패하였습니다.", Toast.LENGTH_LONG).show();
                     }
                 }
             }
