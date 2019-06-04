@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.tear9.myapplication.MsgPacker.Client;
 
@@ -18,12 +21,19 @@ import static java.lang.Thread.sleep;
 
 public class Captcah2Activity extends AppCompatActivity {
     ImageView imageview = null;
+    private InputMethodManager imm;
+
+    /* 최대 몇회의 시도를 했는지 체크하는 변수 */
+    int CountOfTest = 0;
+    int MaxCountOfText = 5;
 
     /* 테스트 시작 버튼을 눌렀는지 체크 하는 변수 */
     boolean test_start_check = false;
 
     /* 테스트 번호를 저장하는 전역 변수 */
     int captcha_test_number;
+
+    boolean isAlcoholCountUpdate = false;
 
     // 이미지 번호를 저장 하는 배열
     int[] img = {R.drawable.recaptcha_img1,
@@ -42,6 +52,11 @@ public class Captcah2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_captcha2);
+
+        setTitle("Captcha2");
+
+        Intent intent = getIntent(); /*데이터 수신*/
+        final String user_id = intent.getExtras().getString("user_id"); /*String형*/
 
         imageview = (ImageView) findViewById(R.id.imageView);
         imageview.setImageResource(R.drawable.warning_img2);
@@ -69,15 +84,13 @@ public class Captcah2Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+                imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(user_captcha_answer.getWindowToken(), 0);
+
                 // 테스트 시작 버튼을 누르지 않았을 경우
                 if (!test_start_check) {
-                    new AlertDialog.Builder(Captcah2Activity.this)
-                            .setTitle("시작 불가능")
-                            .setMessage("테스트 시작 버튼을 눌러주세요")
-                            .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dlg, int sumthin) {
-                                }
-                            }).show(); // 팝업창 보여줌
+                    Toast.makeText(getApplicationContext(), "테스트 시작버튼을 먼저 눌러주세요.", Toast.LENGTH_LONG).show();
                 } else {
                     // EditText에 입력된 값을 가져온뒤 서버로 보냄
 
@@ -85,18 +98,12 @@ public class Captcah2Activity extends AppCompatActivity {
 
                     // 입력된 값이 없을떄
                     if (temp_captch_answer.length() == 0) {
-                        new AlertDialog.Builder(Captcah2Activity.this)
-                                .setTitle("값을 입력 해주세요")
-                                .setMessage("아무것도 입력 되지 않았습니다.")
-                                .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dlg, int sumthin) {
-                                    }
-                                }).show(); // 팝업창 보여줌
+                        Toast.makeText(getApplicationContext(), "값을 입력해주세요.", Toast.LENGTH_LONG).show();
                     } else {
                         // 값이 입력되었을 경우
                         // 캡챠 테스트 넘버는 0~11까지 생성함
                         // 디비에 저장되어있는 숫자가 1부터 시작하므로 1더해서 보냄
-                        String temp_captcha_test_number = Integer.toString(captcha_test_number+1);
+                        String temp_captcha_test_number = Integer.toString(captcha_test_number + 1);
                         String result[] = new String[1];
                         try {
                             result = getCaptcah2TestSet(temp_captcha_test_number, temp_captch_answer);
@@ -107,29 +114,41 @@ public class Captcah2Activity extends AppCompatActivity {
                         }
 
                         /* 캡챠 정답이거나 아닐 경우 처리 할 로직 */
-                        if("true".equals(result[0])) {
-                            new AlertDialog.Builder(Captcah2Activity.this)
-                                    .setTitle("테스트에 통과했습니다.")
-                                    .setMessage("주행이 가능한 상태입니다!")
-                                    .setNeutralButton("안전운행하세요", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dlg, int sumthin) {
-                                        }
-                                    }).show(); // 팝업창 보여줌
-                        }else{
-                            new AlertDialog.Builder(Captcah2Activity.this)
-                                    .setTitle("테스트 실패")
-                                    .setMessage("주행 가능한 상태가 아닙니다")
-                                    .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dlg, int sumthin) {
-                                        }
-                                    }).show(); // 팝업창 보여줌
+                        if ("true".equals(result[0])) {
+                            Toast.makeText(getApplicationContext(), "테스트에 통과 하셨습니다.", Toast.LENGTH_LONG).show();
+                        } else {
+                            if (MaxCountOfText > CountOfTest) {
+                                Toast.makeText(getApplicationContext(), "다시 시도해주세요. " + Integer.toString(MaxCountOfText - CountOfTest) + " 회의 기회가 남았습니다.", Toast.LENGTH_LONG).show();
+                                CountOfTest++;
+                                return;
+                            } else {
+                                Toast.makeText(getApplicationContext(), "최대 시도 횟수를 초과 하셨습니다.", Toast.LENGTH_LONG).show();
+                                if(!isAlcoholCountUpdate){
+                                    isAlcoholCountUpdate=true;
+                                    /* 알코올 운전 카운트 추가*/
+                                    try {
+                                        UpdateAlcholCount(user_id);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                return;
+                            }
+                            // 넘어서면 종료 시킴
                         }
-                        /* leak 윈도우 에러 */
-                        /*
-                        Intent intent = new Intent(getApplicationContext(), TestPassActivity.class);
-                        startActivity(intent);
-                        finish();
-                        */
+                        Handler timer = new Handler(); //Handler 생성
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getApplicationContext(), TestPassActivity.class);
+                                intent.putExtra("user_id", user_id); /*송신*/
+                                startActivity(intent);
+                                finish();
+                            }
+                        }, 1000);
                     }
                 }
             }
@@ -156,6 +175,24 @@ public class Captcah2Activity extends AppCompatActivity {
 
         sleep(1000);
         return result;
+    }
+
+    protected void UpdateAlcholCount(final String _id) throws IOException, InterruptedException {
+        new Thread() {
+            public void run() {
+                try {
+                    Client client = new Client();
+                    client.UpdateAlcoholCount(_id);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+        sleep(1000);
     }
 
     // 숫자를 랜덤으로 생성하는 함수
