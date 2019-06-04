@@ -13,15 +13,16 @@ public class Client {
     private String userid;
     private String passwd;
     private String response_data;
-    // 에뮬 아이피
+    // 에뮬레이터에서 사용하는 아이피
     private String emulator_ip_addr = "10.0.2.2";
 
-    // 내컴퓨터 아이피
-    private String server_target_ip = "172.17.211.117";
-
+    //private String server_target_ip = emulator_ip_addr;
+    private String server_target_ip = "192.168.43.226";
+    //private String server_target_ip = "211.199.172.243";
+    //private String server_target_ip = "192.168.0.54";
 
     // 실제 사용하는 아이피와 포트
-    private String server_ip_addr = emulator_ip_addr;
+    private String server_ip_addr = server_target_ip;
     private int server_port = 8888;
 
     public void setLoginInfo(String id, String passwd){
@@ -33,11 +34,64 @@ public class Client {
         return this.response_data;
     }
 
+    // 2번 요청
+    // 에코 요청으로 네트워크 연결상태가 양호한지 체크하는 메소드
+    // 보낸 데이터를 그대로 받아야한다.
+    public void EchoRequest(final String echo_test_value) throws UnknownHostException,IOException, InterruptedException {
+        try {
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
+            SocketChannel client = SocketChannel.open(hostAddress);
 
+            MessagePacker msg = new MessagePacker();
+            DataBuffer DataBuf = new DataBuffer();
+
+            //msg.SetProtocol(MessageProtocol.CHAT);
+            // 위의 코드를 실행하면 처음에 프로토콜을 전송데이터의 처음에 삽입함
+
+            String packet;
+            String request_number="2";
+
+            DataBuf.set_data("request_number", request_number);
+            DataBuf.set_data("echo_test_key", "echo_test_value");
+            packet = DataBuf.get_data();
+            System.out.println(packet);
+
+            msg.add(packet);
+            msg.Finish();
+
+            /* 서버에게 데이터를 보냄 */
+            client.write(msg.getBuffer());
+
+            ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+
+            /* 서버에서 데이터를 받아옴 */
+            client.read(buf);
+
+            /* ByteBuffer 를 String 으로 저장 함*/
+            byte[] bytes = new byte[buf.position()];
+            buf.flip();
+            buf.get(bytes);
+            String recv_message = new String(bytes);
+
+
+            /* 반드시 닫아줄것 */
+            client.close();
+
+            /* 에러 처리 로직 추가 할것 */
+
+            response_data = recv_message;
+
+        }catch (UnknownHostException ex) {
+            response_data = "false";
+        }catch (IOException ex) {
+            response_data = "false";
+        }
+    }
+
+
+    // 4번 요청
     // 로그인을 위한 메서드
     public void loginCheck() throws UnknownHostException,IOException, InterruptedException {
-        Scanner scan = new Scanner(System.in);
-
         try {
             InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
             SocketChannel client = SocketChannel.open(hostAddress);
@@ -71,7 +125,7 @@ public class Client {
             /* 서버에서 데이터를 받아옴 */
             client.read(buf);
 
-            /* ByteBuffer 를 String으로 저장 함*/
+            /* ByteBuffer 를 String 으로 저장 함*/
             byte[] bytes = new byte[buf.position()];
             buf.flip();
             buf.get(bytes);
@@ -92,6 +146,7 @@ public class Client {
         }
     }
 
+    // 6번 요청
     //회원 가입을 위한 아이디 중복검사를 실행하는 메서드
     public void IdCheck(String _id) throws UnknownHostException,IOException, InterruptedException {
         try {
@@ -124,7 +179,7 @@ public class Client {
             /* 서버에서 데이터를 받아옴 */
             client.read(buf);
 
-            /* ByteBuffer 를 String으로 저장 함*/
+            /* ByteBuffer 를 String 으로 저장 함*/
             byte[] bytes = new byte[buf.position()];
             buf.flip();
             buf.get(bytes);
@@ -145,6 +200,7 @@ public class Client {
         }
     }
 
+    // 8번 요청
     //회원 가입을 실행하는 메서드
     public void CreateAccount(String _id, String _passwd, String _name, String _tel) throws UnknownHostException,IOException, InterruptedException {
         try {
@@ -201,7 +257,7 @@ public class Client {
         }
     }
 
-
+    // 10번 요청
     //캡챠의 문제를 가져옴
     public void getCaptchatTestSet() throws UnknownHostException,IOException, InterruptedException {
         try {
@@ -249,8 +305,8 @@ public class Client {
         }
     }
 
-
-    // 캡챠의 정답을 체크 하는 메소드
+    // 10-2 번 요청 사용하지 않는다.
+    // 새로운 계정을 만드는 메소드
     public void CreateAccount(String _captcha_ans_num, String _capthca_ans) throws UnknownHostException,IOException, InterruptedException {
         try {
             InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
@@ -303,6 +359,7 @@ public class Client {
         }
     }
 
+    // 12번 요청
     // 마지막 운전 날짜를 가져오는 메소드
     public void getLastDriveDate(String _id) throws UnknownHostException,IOException, InterruptedException {
         Scanner scan = new Scanner(System.in);
@@ -359,6 +416,7 @@ public class Client {
         }
     }
 
+    // 14번 요청
     // 이미지에 쓰여진 글자를 통해 테스트를 진행하는 캡차
     // 입력된 정답과 문제를 보냄 테스트가 통과했는지 아닌지에대한 값만을 가져옴
     public void getCaptchatTestSet2(String captcha_test_number, String captcha_test_answer) throws UnknownHostException,IOException, InterruptedException {
@@ -529,6 +587,107 @@ public class Client {
             DataBuf.set_data("userpassword", userpassword);
             DataBuf.set_data("username", username);
             DataBuf.set_data("usertel", usertel);
+            packet = DataBuf.get_data();
+
+            msg.add(packet);
+            msg.Finish();
+
+            /* 서버에게 데이터를 보냄 */
+            client.write(msg.getBuffer());
+
+            ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+
+            /* 서버에서 데이터를 받아옴 */
+            client.read(buf);
+
+            /* ByteBuffer 를 String 으로 저장 함*/
+            byte[] bytes = new byte[buf.position()];
+            buf.flip();
+            buf.get(bytes);
+            String recv_message = new String(bytes);
+
+
+            /* 반드시 닫아줄것 */
+            client.close();
+
+            /* 에러 처리 로직 추가 할것 */
+
+            response_data = recv_message;
+
+        }catch (UnknownHostException ex) {
+            System.err.println(ex);
+        }catch (IOException ex) {
+            System.err.println(ex);
+        }
+    }
+
+
+    // 22번 요청
+    // 마지막 운전 날짜를 업데이트 하는 함수
+    public void UpdateLastDriveDate(String userid) throws UnknownHostException,IOException, InterruptedException {
+        try {
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
+            SocketChannel client = SocketChannel.open(hostAddress);
+
+            MessagePacker msg = new MessagePacker();
+            DataBuffer DataBuf = new DataBuffer();
+
+            String packet;
+            String request_number="22";
+
+            /* 필요한 파라미터 추가 할것 */
+            DataBuf.set_data("request_number", request_number);
+            DataBuf.set_data("userid", userid);
+            packet = DataBuf.get_data();
+
+            msg.add(packet);
+            msg.Finish();
+
+            /* 서버에게 데이터를 보냄 */
+            client.write(msg.getBuffer());
+
+            ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+
+            /* 서버에서 데이터를 받아옴 */
+            client.read(buf);
+
+            /* ByteBuffer 를 String 으로 저장 함*/
+            byte[] bytes = new byte[buf.position()];
+            buf.flip();
+            buf.get(bytes);
+            String recv_message = new String(bytes);
+
+
+            /* 반드시 닫아줄것 */
+            client.close();
+
+            /* 에러 처리 로직 추가 할것 */
+
+            response_data = recv_message;
+
+        }catch (UnknownHostException ex) {
+            System.err.println(ex);
+        }catch (IOException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    // 24번 요청
+    // 음주운전 카운트를 증가 시키는 함수
+    public void UpdateAlcoholCount(String userid) throws UnknownHostException,IOException, InterruptedException {
+        try {
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
+            SocketChannel client = SocketChannel.open(hostAddress);
+
+            MessagePacker msg = new MessagePacker();
+            DataBuffer DataBuf = new DataBuffer();
+
+            String packet;
+            String request_number="24";
+
+            /* 필요한 파라미터 추가 할것 */
+            DataBuf.set_data("request_number", request_number);
+            DataBuf.set_data("userid", userid);
             packet = DataBuf.get_data();
 
             msg.add(packet);
