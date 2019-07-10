@@ -22,7 +22,7 @@
 | <img src="/result_images/menu_page.jpg" width="360" height="640"> | <img src="/result_images/drive_info_page.jpg" width="360" height="640"> |
 | 두가지 음주 운전 테스트 중 선택 가능 | 운전정보를 리스트 뷰로 표시 |
 
-| 개인정보 변경 화면 | 
-| :--------: |
-| <img src="/result_images/modify_page.jpg" width="360" height="640"> |
-| 아이디는 변경이 불가능함 |
+| 개인정보 변경 화면 | 음주운전 테스트 화면 | 
+| :--------: | :--------: |
+| <img src="/result_images/modify_page.jpg" width="360" height="640"> | <img src="/result_images/captcha_page.jpg" width="360" height="640"> |
+| 아이디는 변경이 불가능함 | 테스트 시작 버튼 클릭후 테스트 진행<br> 대소문자 모두 입력 가능함 |
