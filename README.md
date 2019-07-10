@@ -21,3 +21,8 @@
 | :--------: | :--------: |
 | <img src="/result_images/menu_page.jpg" width="360" height="640"> | <img src="/result_images/drive_info_page.jpg" width="360" height="640"> |
 | 두가지 음주 운전 테스트 중 선택 가능 | 운전정보를 리스트 뷰로 표시 |
+
+| 개인정보 변경 화면 | 
+| :--------: |
+| <img src="/result_images/modify_page.jpg" width="360" height="640"> |
+| 아이디는 변경이 불가능함 |
