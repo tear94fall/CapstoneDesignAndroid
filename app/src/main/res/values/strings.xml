@@ -19,4 +19,5 @@
     <string name="drive_info_button_str">나의 운전 정보보기</string>
     <string name="modify_user_info_button_str">회원 정보 변경하기</string>
     <string name="menu_text_view_str">사용가능 메뉴</string>
+    <string name="drive_info_text_view_str">운전 정보</string>
 </resources>
