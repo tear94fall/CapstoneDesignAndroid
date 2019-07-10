@@ -1,7 +1,5 @@
 package com.example.tear9.myapplication;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +13,7 @@ import java.io.IOException;
 
 import static java.lang.Thread.sleep;
 
-public class FinishActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
     private BackPressCloseHandler backPressCloseHandler;
 
     @Override
@@ -27,7 +25,7 @@ public class FinishActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finish);
+        setContentView(R.layout.activity_menu);
 
         // 상단 타이틀 변경
         setTitle("메뉴들");
@@ -51,26 +49,8 @@ public class FinishActivity extends AppCompatActivity {
         }
 
         if (result[0].length() != 0 || result[0] != "0") {
-            /*
-            new AlertDialog.Builder(FinishActivity.this)
-                    .setTitle("로그인 성공!!")
-                    .setMessage("마지막 운행으로 부터 " + result[0] + "일이 지났습니다.")
-                    .setNeutralButton("확인", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dlg, int sumthin) {
-                        }
-                    }).show(); // 팝업창 보여줌
-            */
             Toast.makeText(getApplicationContext(), "로그인에 성공하셨습니다. \n마지막 운행으로 부터 " + result[0] + "일이 지났습니다.", Toast.LENGTH_LONG).show();
         } else {
-            /*
-            new AlertDialog.Builder(FinishActivity.this)
-                    .setTitle("로그인 성공!!")
-                    .setMessage("환영합니다.")
-                    .setNeutralButton("확인", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dlg, int sumthin) {
-                        }
-                    }).show(); // 팝업창 보여줌
-                    */
             Toast.makeText(getApplicationContext(), "로그인 성공!!", Toast.LENGTH_LONG).show();
         }
 

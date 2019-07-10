@@ -19,7 +19,7 @@
 
     <!-- inform text view -->
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -80,7 +80,7 @@
         android:layout_width="300dp"
 
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/id_edit_text"
         android:ems="10"
         android:hint="@string/id_edit_text_str"
@@ -90,8 +90,9 @@
         android:selectAllOnFocus="false"
         android:singleLine="false"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <!-- password edit text-->
     <EditText

@@ -14,4 +14,9 @@
     <string name="cancel_button_str">뒤로가기</string>
     <string name="name_edit_text_str">이름을 입력해주세요</string>
     <string name="tel_edit_text_str">전화번호를 입력해주세요</string>
+    <string name="test1_button_str">테스트1 시작하기</string>
+    <string name="test2_button_str">테스트2 시작하기</string>
+    <string name="drive_info_button_str">나의 운전 정보보기</string>
+    <string name="modify_user_info_button_str">회원 정보 변경하기</string>
+    <string name="menu_text_view_str">사용가능 메뉴</string>
 </resources>

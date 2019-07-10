@@ -1,8 +1,5 @@
 package com.example.tear9.myapplication;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -132,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 String id_str = id.getText().toString();
                 String pw_str = pw.getText().toString();
 
-                TextView textView1 = (TextView) findViewById(R.id.textView4);
+                TextView textView1 = (TextView) findViewById(R.id.textView1);
 
                 if (id_str.replace(" ", "").equals("")) {
                     Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_LONG).show();
@@ -155,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     if (checker) {
                         /* 로그인 성공한 다음 */
                         /* 테스트 시작 페이지로 이동함*/
-                        Intent intent = new Intent(getApplicationContext(), FinishActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                         intent.putExtra("user_id", id_str); /*송신*/
                         startActivity(intent);
                         finish();
