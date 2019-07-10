@@ -6,111 +6,151 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/UserId_editText"
+    <!-- inform text view -->
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="104dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="아이디"
+        android:layout_marginTop="50dp"
+        android:text="@string/modify_user_info_text_view_str"
+        android:textColor="#42B1F0"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/UserPasswd_editText"
+    <!-- id warning str -->
+    <TextView
+        android:id="@+id/id_warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/id_warnings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.778"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+    <!-- modify_id edit text -->
+    <EditText
+        android:id="@+id/UserId_editText"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/id_edit_text"
         android:ems="10"
+        android:hint="@string/id_str"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:text="비번"
+        android:padding="10dip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_warning" />
+
+    <!-- modify_pw edit text -->
+    <EditText
+        android:id="@+id/UserPasswd_editText"
+        android:layout_width="300dp"
+
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/id_edit_text"
+        android:ems="10"
+        android:hint="@string/pw_str"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:padding="10dip"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/UserId_editText" />
 
+    <!-- modify_name edit text -->
     <EditText
         android:id="@+id/UserName_editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
+
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/id_edit_text"
         android:ems="10"
+        android:hint="@string/name_str"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:text="이름"
+        android:padding="10dip"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/UserPasswd_editText" />
 
+    <!-- modify_tel edit text -->
     <EditText
         android:id="@+id/UserTel_editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
+
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/id_edit_text"
         android:ems="10"
+        android:hint="@string/tel_str"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:text="전화번호"
+        android:padding="10dip"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/UserName_editText" />
 
-    <TextView
-        android:id="@+id/UserId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="116dp"
-        android:text="사용자 아이디"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/UserPasswd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
-        android:text="사용자 비밀번호"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UserId" />
-
-    <TextView
-        android:id="@+id/UserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
-        android:text="사용자 이름"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UserPasswd" />
-
-    <TextView
-        android:id="@+id/UserTel"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
-        android:text="사용자 연락처"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UserName" />
-
+    <!-- cancel button -->
     <Button
         android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="404dp"
-        android:text="뒤로가기"
-        app:layout_constraintStart_toEndOf="@+id/modify_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="20dp"
+        android:background="#5FC2FA"
+        android:text="@string/cancel_button_str"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modify_button" />
 
+    <!-- modify button -->
     <Button
         android:id="@+id/modify_button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="#5FC2FA"
+        android:text="@string/modify_button_str"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UserTel_editText" />
+
+    <!-- bottom logo -->
+    <TextView
+        android:id="@+id/bottom_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="404dp"
-        android:text="수정하기"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="12dp"
+        android:text="@string/bottom_logo_str"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
