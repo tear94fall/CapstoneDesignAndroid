@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="앱이름">보람상조</string>
+    <string name="login_button_str">로그인</string>
+    <string name="id_edit_text_str">아이디를 입력해주세요</string>
+    <string name="pw_edit_text_str">비밀번호를 입력해주세요</string>
+    <string name="login_logo_text_view_str">로그인 하기</string>
+    <string name="register_button_str">회원가입</string>
+    <string name="find_user_info_button_str">아이디/비밀번호 찾기</string>
+    <string name="bottom_logo_str">Copyright 2019. 보람상조 All Rights Reserved.</string>
 </resources>

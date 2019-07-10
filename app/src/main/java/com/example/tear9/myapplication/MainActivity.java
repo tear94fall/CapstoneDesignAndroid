@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         backPressCloseHandler.onBackPressed();
     }
 
-
     /* 중복 클릭 방지를 위한 변수 */
     private static final long MIN_CLICK_INTERVAL = 1000;
     private long mLastClickTime;
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button button = findViewById(R.id.button);
         final Button reg_button = findViewById(R.id.Register);
+        final Button find_user_info_button = findViewById(R.id.find_user_info_button);
 
         final int[] login_cnt = {0};
 
@@ -76,24 +76,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (result[0] == null) {
-                /*
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("서비스 점검중")
-                        .setMessage("\n원활한 서비스를 위해 점검중입니다.\n관지라에게 연락주세요.\n감사합니다.")
-                        .setNeutralButton("앱 종료", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dlg, int sumthin) {
-                                MainActivity.this.finish();
-                            }
-                        }).show(); // 팝업창 보여줌
-                        */
-
                 Toast.makeText(getApplicationContext(), "서비스 점검중 입니다.", Toast.LENGTH_LONG).show();
                 button.setEnabled(false);
                 reg_button.setEnabled(false);
 
-
-                TextView id = (TextView) findViewById(R.id.editText2);
-                TextView pw = (TextView) findViewById(R.id.editText);
+                TextView id = (TextView) findViewById(R.id.id_input_edit_text);
+                TextView pw = (TextView) findViewById(R.id.pw_input_edit_text);
                 id.setInputType(InputType.TYPE_NULL);
                 pw.setInputType(InputType.TYPE_NULL);
 
@@ -107,29 +95,10 @@ public class MainActivity extends AppCompatActivity {
                 }, 2000);
 
             } else {
-                /*
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("환영합니다.")
-                        .setMessage(alertMessage)
-                        .setNeutralButton("로그인  하기", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dlg, int sumthin) {
-                            }
-                        }).show(); // 팝업창 보여줌
-                        */
                 Toast.makeText(getApplicationContext(), alertMessage, Toast.LENGTH_LONG).show();
             }
         } else {
             alertMessage = "네트워크가 연결되지 않았습니다.";
-            /*
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("네트워크 연결 오류.")
-                    .setMessage(alertMessage)
-                    .setNeutralButton("앱 종료후 다시 시작", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dlg, int sumthin) {
-                            MainActivity.this.finish();
-                        }
-                    }).show(); // 팝업창 보여줌
-                    */
             Toast.makeText(getApplicationContext(), alertMessage, Toast.LENGTH_LONG).show();
             Handler timer = new Handler(); //Handler 생성
 
@@ -145,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 long currentClickTime = SystemClock.uptimeMillis();
                 long elapsedTime = currentClickTime - mLastClickTime;
                 mLastClickTime = currentClickTime;
@@ -155,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                TextView id = (TextView) findViewById(R.id.editText2);
-                TextView pw = (TextView) findViewById(R.id.editText);
+                TextView id = (TextView) findViewById(R.id.id_input_edit_text);
+                TextView pw = (TextView) findViewById(R.id.pw_input_edit_text);
 
                 imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(pw.getWindowToken(), 0);
@@ -165,6 +133,15 @@ public class MainActivity extends AppCompatActivity {
                 String pw_str = pw.getText().toString();
 
                 TextView textView1 = (TextView) findViewById(R.id.textView4);
+
+                if (id_str.replace(" ", "").equals("")) {
+                    Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (pw_str.replace(" ", "").equals("")) {
+                    Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 // 로그인 성공 여부 확인 하는 함수
                 try {
@@ -186,18 +163,12 @@ public class MainActivity extends AppCompatActivity {
                         /* 로그인 실패시 현재 페이지 에서 팝업창 띄울것 */
                         /* 일정 횟수 이상 넘어갈 경우에는 블로킹 되도록 처리 함*/
                         login_cnt[0] += 1;
-                        if (login_cnt[0] >= 5) {
+
+                        if (login_cnt[0] == 5) {
                             button.setEnabled(false);
+                        } else if(login_cnt[0]>5){
+                            Toast.makeText(getApplicationContext(), "회원 정보 찾기를 눌러 주세요.", Toast.LENGTH_LONG).show();
                         } else {
-                            /*
-                            new AlertDialog.Builder(MainActivity.this)
-                                    .setTitle("로그인 실패")
-                                    .setMessage("아이디와 비밀번호를 확인 해주세요")
-                                    .setNeutralButton("다시 시도", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dlg, int sumthin) {
-                                        }
-                                    }).show(); // 팝업창 보여줌
-                                    */
                             Toast.makeText(getApplicationContext(), "로그인 실패. 아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -249,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
         sleep(1000);
         return result;
     }
-
 
     // 서버에게 에코 요청을 보냄
     // 서버가 켜져있는지 확인 하는 메소드
