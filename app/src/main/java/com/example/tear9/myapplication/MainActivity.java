@@ -186,6 +186,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 아이디 비밀번호 찾기
+        find_user_info_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "아직 준비중입니다..", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     // 네트워크 상태를 체크하는 메소드

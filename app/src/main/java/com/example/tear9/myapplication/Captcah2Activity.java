@@ -49,6 +49,11 @@ public class Captcah2Activity extends AppCompatActivity {
             R.drawable.recaptcha_img11};
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_captcha2);
@@ -65,6 +70,7 @@ public class Captcah2Activity extends AppCompatActivity {
 
         Button submit_button = findViewById(R.id.button4);
         Button start_button = findViewById(R.id.button5);
+        Button cancel_button = findViewById(R.id.cancel_button);
 
         /*
          * 테스트 시작 버튼을 먼저 누름
@@ -151,6 +157,14 @@ public class Captcah2Activity extends AppCompatActivity {
                         }, 1000);
                     }
                 }
+            }
+        });
+
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("뒤로 가기");
+                onBackPressed();
             }
         });
     }

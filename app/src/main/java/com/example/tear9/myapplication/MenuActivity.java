@@ -35,6 +35,7 @@ public class MenuActivity extends AppCompatActivity {
         Button button2 = findViewById(R.id.button6);
         Button mypage_button = findViewById(R.id.mypage_button);
         Button modify_button = findViewById(R.id.modify_button);
+        Button my_location_button = findViewById(R.id.my_location_button);
 
         Intent intent = getIntent(); /*데이터 수신*/
         final String user_id = intent.getExtras().getString("user_id"); /*String형*/
@@ -91,6 +92,15 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ModifyActivity.class);
                 intent.putExtra("user_id", user_id); /*송신*/
                 startActivity(intent);
+            }
+        });
+
+        // 구글맵에 내 위치 표시하기
+        my_location_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(getApplicationContext(), ModifyActivity.class);
+                //startActivity(intent);
             }
         });
     }
