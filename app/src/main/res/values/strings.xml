@@ -26,6 +26,7 @@
     <string name="test2_button_str">테스트2 시작하기</string>
     <string name="captcha_answer_submit">제출 하기</string>
     <string name="captcha_answer_start">테스트 시작하기</string>
+    <string name="recaptcha_clear">초기화</string>
     <string name="drive_info_button_str">나의 운전 정보보기</string>
     <string name="modify_user_info_button_str">회원 정보 변경하기</string>
     <string name="menu_text_view_str">사용가능 메뉴</string>

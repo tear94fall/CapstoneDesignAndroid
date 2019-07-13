@@ -19,7 +19,7 @@ import java.io.IOException;
 
 import static java.lang.Thread.sleep;
 
-public class Captcah2Activity extends AppCompatActivity {
+public class Captcha2Activity extends AppCompatActivity {
     ImageView imageview = null;
     private InputMethodManager imm;
 

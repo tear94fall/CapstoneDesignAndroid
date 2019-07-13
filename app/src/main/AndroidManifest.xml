@@ -17,13 +17,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
-        <activity android:name=".JoinActivity" />
+        <activity android:name=".RecaptchaActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".TestPassActivity" />
-        <activity android:name=".Captcah2Activity" />
+        <activity android:name=".Captcha2Activity" />
         <activity android:name=".MyInfoActivity" />
         <activity android:name=".ModifyActivity" />
-        <activity android:name=".MyLocationActivity" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -1,7 +1,5 @@
 package com.example.tear9.myapplication;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,19 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tear9.myapplication.MsgPacker.Client;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 import static java.lang.Thread.sleep;
 
-public class JoinActivity extends AppCompatActivity {
+public class RecaptchaActivity extends AppCompatActivity {
     /*
     정답을 배열로 고정헀지만, 서버와 통신하여 값을 비교하는 로직 구상할것
      */
@@ -43,7 +38,7 @@ public class JoinActivity extends AppCompatActivity {
     HashMap<Integer, Boolean> answer_map = new HashMap<Integer, Boolean>();
     HashMap<Integer, Boolean> test_map = new HashMap<Integer, Boolean>();
 
-    public JoinActivity() {
+    public RecaptchaActivity() {
     }
 
     // 이미지 버튼
@@ -71,7 +66,7 @@ public class JoinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join);
+        setContentView(R.layout.activity_recaptcha);
 
         setTitle("ReCaptcha");
 
