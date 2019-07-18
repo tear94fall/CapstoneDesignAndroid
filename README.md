@@ -25,4 +25,4 @@
 | 개인정보 변경 화면 | 음주운전 테스트 화면 | 
 | :--------: | :--------: |
 | <img src="/result_images/modify_info_page.jpg" width="360" height="640"> | <img src="/result_images/captcha_page.jpg" width="360" height="640"> |
-| 아이디는 변경이 불가능함 | 테스트 시작 버튼 클릭후 테스트 진행<br> 대소문자 모두 입력 가능함 |
+| 아이디는 변경이 불가능함<br> (전화번호는 가린것임) | 테스트 시작 버튼 클릭후 테스트 진행<br> 대소문자 모두 입력 가능함 |
