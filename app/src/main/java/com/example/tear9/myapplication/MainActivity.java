@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "서비스 점검중 입니다.", Toast.LENGTH_LONG).show();
                 button.setEnabled(false);
                 reg_button.setEnabled(false);
+                find_user_info_button.setEnabled(false);
 
                 TextView id = (TextView) findViewById(R.id.id_input_edit_text);
                 TextView pw = (TextView) findViewById(R.id.pw_input_edit_text);
@@ -191,7 +192,9 @@ public class MainActivity extends AppCompatActivity {
         find_user_info_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "아직 준비중입니다..", Toast.LENGTH_LONG).show();
+                /* 아이디 비밀번호 찾기 진행 */
+                Intent intent = new Intent(getApplicationContext(), FindActivity.class);
+                startActivity(intent);
             }
         });
     }

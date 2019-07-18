@@ -35,4 +35,13 @@
     <string name="pw_str">비밀번호</string>
     <string name="name_str">이름</string>
     <string name="tel_str">전화번호</string>
+    <string name="find_user_info_id">아이디 찾기</string>
+    <string name="find_id_for_name">이름을 입력해주세요</string>
+    <string name="find_id_for_tel">전화번호를 입력해주세요</string>
+    <string name="find_id_button">아이디 찾기</string>
+
+    <string name="find_user_info_pw">비밀번호 찾기</string>
+    <string name="find_pw_for_id">아이디를 입력해주세요</string>
+    <string name="find_pw_for_name">이름을 입력해주세요</string>
+    <string name="find_pw_button">비밀번호 찾기</string>
 </resources>

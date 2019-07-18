@@ -17,8 +17,8 @@ public class Client {
     private String emulator_ip_addr = "10.0.2.2";
 
     /* 서버의 아이피를 입력함 */
-    //private String server_target_ip = emulator_ip_addr;
-    private String server_target_ip = "192.168.0.54";
+    private String server_target_ip = "172.17.211.160";
+    //private String server_target_ip = "192.168.0.54";
 
     // 실제 사용하는 아이피와 포트
     private String server_ip_addr = server_target_ip;
@@ -687,6 +687,108 @@ public class Client {
             /* 필요한 파라미터 추가 할것 */
             DataBuf.set_data("request_number", request_number);
             DataBuf.set_data("userid", userid);
+            packet = DataBuf.get_data();
+
+            msg.add(packet);
+            msg.Finish();
+
+            /* 서버에게 데이터를 보냄 */
+            client.write(msg.getBuffer());
+
+            ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+
+            /* 서버에서 데이터를 받아옴 */
+            client.read(buf);
+
+            /* ByteBuffer 를 String 으로 저장 함*/
+            byte[] bytes = new byte[buf.position()];
+            buf.flip();
+            buf.get(bytes);
+            String recv_message = new String(bytes);
+
+
+            /* 반드시 닫아줄것 */
+            client.close();
+
+            /* 에러 처리 로직 추가 할것 */
+
+            response_data = recv_message;
+
+        }catch (UnknownHostException ex) {
+            System.err.println(ex);
+        }catch (IOException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    // 26번 요청
+    // 이름과 전화버호로 아이디를 찾는 함수
+    public void FindUserId(String username, String usertel) throws UnknownHostException,IOException, InterruptedException {
+        try {
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
+            SocketChannel client = SocketChannel.open(hostAddress);
+
+            MessagePacker msg = new MessagePacker();
+            DataBuffer DataBuf = new DataBuffer();
+
+            String packet;
+            String request_number="26";
+
+            /* 필요한 파라미터 추가 할것 */
+            DataBuf.set_data("request_number", request_number);
+            DataBuf.set_data("username", username);
+            DataBuf.set_data("usertel", usertel);
+            packet = DataBuf.get_data();
+
+            msg.add(packet);
+            msg.Finish();
+
+            /* 서버에게 데이터를 보냄 */
+            client.write(msg.getBuffer());
+
+            ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+
+            /* 서버에서 데이터를 받아옴 */
+            client.read(buf);
+
+            /* ByteBuffer 를 String 으로 저장 함*/
+            byte[] bytes = new byte[buf.position()];
+            buf.flip();
+            buf.get(bytes);
+            String recv_message = new String(bytes);
+
+
+            /* 반드시 닫아줄것 */
+            client.close();
+
+            /* 에러 처리 로직 추가 할것 */
+
+            response_data = recv_message;
+
+        }catch (UnknownHostException ex) {
+            System.err.println(ex);
+        }catch (IOException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    // 28번 요청
+    // 아이디와 이름으로 비밀번호를 찾아내는 함수
+    public void FindUserPw(String userid, String username) throws UnknownHostException,IOException, InterruptedException {
+        try {
+            InetSocketAddress hostAddress = new InetSocketAddress(server_ip_addr, server_port);
+            SocketChannel client = SocketChannel.open(hostAddress);
+
+            MessagePacker msg = new MessagePacker();
+            DataBuffer DataBuf = new DataBuffer();
+
+            String packet;
+            String request_number="28";
+
+            /* 필요한 파라미터 추가 할것 */
+            DataBuf.set_data("request_number", request_number);
+            DataBuf.set_data("userid", userid);
+            DataBuf.set_data("username", username);
             packet = DataBuf.get_data();
 
             msg.add(packet);
