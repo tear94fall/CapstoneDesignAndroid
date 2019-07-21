@@ -1,6 +1,7 @@
 package com.example.tear9.myapplication;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -8,33 +9,43 @@ import android.widget.TextView;
 import com.example.tear9.myapplication.MsgPacker.Client;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static java.lang.Thread.sleep;
 
 public class TestPassActivity extends AppCompatActivity {
-    long now = System.currentTimeMillis();
-    // 현재시간을 date 변수에 저장한다.
-    Date date = new Date(now);
-    // 시간을 나타냇 포맷을 정한다 ( yyyy/MM/dd 같은 형태로 변형 가능 )
-    SimpleDateFormat sdfNow = new SimpleDateFormat("MM월dd일 HH시mm분");
-    // nowDate 변수에 값을 저장한다.
-    String formatDate = sdfNow.format(date);
+    private AsyncTask<Void, Void, Void> mTask;
+    TextView current_time;
+    TextView realtime_clock;
 
-    TextView dateNow;
+    private BackPressCloseHandler backPressCloseHandler;
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testpass);
 
+        setTitle("운행 시작");
+        backPressCloseHandler = new BackPressCloseHandler(this);
+
         Intent intent = getIntent(); /*데이터 수신*/
         final String user_id = intent.getExtras().getString("user_id"); /*String형*/
 
-        TextView dateNow = (TextView) findViewById(R.id.textView5);
-        dateNow.setText(formatDate);    // TextView 에 현재 시간 문자열 할당
+        current_time = (TextView) findViewById(R.id.drive_start_time_text_view);
+        realtime_clock = (TextView) findViewById(R.id.realtime_clock);
+
+        String temp = DateFormat.getDateTimeInstance().format(new Date());
+        current_time.setText(temp);
+
+        ShowTimeMethod();
 
         try {
             UpdateDriveDate(user_id);
@@ -45,13 +56,38 @@ public class TestPassActivity extends AppCompatActivity {
         }
     }
 
+    public void ShowTimeMethod()
+    {
+        mTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                while (true)
+                {
+                    try
+                    {
+                        publishProgress();
+                        Thread.sleep(1000);
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            protected void onProgressUpdate(Void... progress)
+            {
+                String temp = DateFormat.getDateTimeInstance().format(new Date());
+                realtime_clock.setText(temp);
+            }
+        };
+        mTask.execute();
+    }
+
     protected void UpdateDriveDate(final String _id) throws IOException, InterruptedException {
         new Thread() {
             public void run() {
                 try {
                     Client client = new Client();
                     client.UpdateLastDriveDate(_id);
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

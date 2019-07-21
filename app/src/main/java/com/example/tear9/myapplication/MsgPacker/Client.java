@@ -17,8 +17,8 @@ public class Client {
     private String emulator_ip_addr = "10.0.2.2";
 
     /* 서버의 아이피를 입력함 */
-    private String server_target_ip = "172.17.211.160";
-    //private String server_target_ip = "192.168.0.54";
+    //private String server_target_ip = "172.17.211.160";
+    private String server_target_ip = "192.168.0.54";
 
     // 실제 사용하는 아이피와 포트
     private String server_ip_addr = server_target_ip;

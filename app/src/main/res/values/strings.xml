@@ -39,9 +39,11 @@
     <string name="find_id_for_name">이름을 입력해주세요</string>
     <string name="find_id_for_tel">전화번호를 입력해주세요</string>
     <string name="find_id_button">아이디 찾기</string>
-
     <string name="find_user_info_pw">비밀번호 찾기</string>
     <string name="find_pw_for_id">아이디를 입력해주세요</string>
     <string name="find_pw_for_name">이름을 입력해주세요</string>
     <string name="find_pw_button">비밀번호 찾기</string>
+    <string name="drive_start_text_view">운전 시작 시간</string>
+    <string name="current_time_text_view">현재 시간</string>
+    <string name="before_time">00:00:00</string>
 </resources>
