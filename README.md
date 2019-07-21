@@ -21,10 +21,10 @@
 |<img src="/result_images/login_page.jpg" width="270" height="480">|<img src="/result_images/register_page.jpg" width="270" height="480">| <img src="/result_images/find_user_info.jpg" width="270" height="480"> |
 | 로그인 최대 5회까지 시도 가능 | 아이디 중복검사 후<br> 나머지 항목 모두 작성 | 아이디/비밀번호 찾기가 가능함<br> 메세지 형태로 띄워줌 |
 
-| 메뉴 화면 |  음주운전 테스트 화면 | 
-| :--------: | :--------: |
-| <img src="/result_images/menu_page.jpg" width="270" height="480"> | <img src="/result_images/captcha_page.jpg" width="270" height="480"> |
-| 두가지 음주 운전 테스트 중 선택 가능 | 테스트 시작 버튼 클릭후 테스트 진행<br> 대소문자 모두 입력 가능함 |
+| 메뉴 화면 |  음주운전 테스트 화면 | 테스트 통과 화면 |
+| :--------: | :--------: | :--------: |
+| <img src="/result_images/menu_page.jpg" width="270" height="480"> | <img src="/result_images/captcha_page.jpg" width="270" height="480"> | <img src="/result_images/test_pass_page.jpg" width="270" height="480"> |
+| 두가지 음주 운전 테스트 중 선택 가능 | 테스트 시작 버튼 클릭후 테스트 진행<br> 대소문자 모두 입력 가능함 | 운전시작 시간은 고정<br> 현재 시간은 초단위로 갱신됨 |
 
 | 운전자 정보 화면 | 개인정보 변경 화면 | 
 | :--------: | :--------: | 
